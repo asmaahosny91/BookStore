@@ -8,19 +8,19 @@ import './book.css';
 
 const PostContainer = () => {
   const dispatch=useDispatch();
-  const isLoading = useSelector((state) => state.books);
+  const isLoading = useSelector((state) => state.isLoading);
+  const books =useSelector((state) => state.books);
  
   useEffect(()=>{
-    console.log("s",isLoading)
     dispatch(getBooks());
-  },[])
-  console.log("s",isLoading)
+  },[dispatch])
+ 
   return (
     <Fragment>
       <hr className='my-5' />
       <div className='row'>
         <div className='col'>
-          <BooksList isLoading={isLoading}/>
+          <BooksList isLoading={isLoading} books={books}/>
         </div>
         <div className='col side-line'>
           <BookInfo />

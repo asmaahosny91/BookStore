@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 export const getBooks=createAsyncThunk('books/getBooks',async(_,thunkAPI)=>{     // action has ability to deal with side effect 
-    try{
+   const rejectWithError =thunkAPI;
+  try{
         const res=await fetch('http://localhost:3005/books');
         const data=res.json();
         return data;    
     }catch(error){
-     console.log(error)
+     console.log(rejectWithError.errorMessage)
     }
 });
 
@@ -21,6 +22,7 @@ const bookSlice = createSlice({
           })
         builder.addCase(getBooks.fulfilled, (state, action) => {
           state.isLoading=false;
+          state.books=action.payload;
         })
         builder.addCase(getBooks.rejected, (state, action) => {
             state.isLoading=false;
